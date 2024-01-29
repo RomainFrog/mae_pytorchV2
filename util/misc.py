@@ -18,8 +18,9 @@ from pathlib import Path
 
 import torch
 import torch.distributed as dist
-from torch._six import inf
-
+# PyTorch V2: Change torch.inf import
+from torch import inf
+# End of PyTorch V2 update
 
 class SmoothedValue(object):
     """Track a series of values and provide access to smoothed values over a

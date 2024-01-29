@@ -44,7 +44,10 @@ class VisionTransformer(timm.models.vision_transformer.VisionTransformer):
             x = blk(x)
 
         if self.global_pool:
-            x = x[:, 1:, :].mean(dim=1)  # global pool without cls token
+            # PyTorch V2: Update global pooling with unsqueeze, dimension conflicts
+            # x = x[:, 1:, :].mean(dim=1)  # global pool without cls token
+            x = x[:, 1:, :].mean(dim=1).unsqueeze(1)  # global pool without cls token
+            # End of PyTorch V2 update
             outcome = self.fc_norm(x)
         else:
             x = self.norm(x)
@@ -54,6 +57,7 @@ class VisionTransformer(timm.models.vision_transformer.VisionTransformer):
 
 
 def vit_base_patch16(**kwargs):
+    # Forward pass fails in this model
     model = VisionTransformer(
         patch_size=16, embed_dim=768, depth=12, num_heads=12, mlp_ratio=4, qkv_bias=True,
         norm_layer=partial(nn.LayerNorm, eps=1e-6), **kwargs)
