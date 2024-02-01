@@ -14,6 +14,7 @@ This is a PyTorch/GPU re-implementation of the paper [Masked Autoencoders Are Sc
   year    = {2021},
 }
 ```
+* Adapted for PyTorch 2.1+ by Romain Froger
 
 * The original implementation was in TensorFlow+TPU. This re-implementation is in PyTorch+GPU.
 
